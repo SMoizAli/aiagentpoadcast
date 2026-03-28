@@ -1,0 +1,36 @@
+modules = ["python-3.11"]
+[nix]
+channel = "stable-25_05"
+packages = ["libsndfile"]
+
+[agent]
+expertMode = true
+
+[userenv]
+
+[userenv.shared]
+MODEL = "openai/Qwen/Qwen2.5-7B-Instruct"
+FEATHERLESS_API_BASE = "https://api.featherless.ai/v1"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd podcastercrew-productionzip/podcaster_crew-production && crewai run"
